@@ -11,6 +11,10 @@ struct ContentView: View {
     var body: some View {
         
         TabView {
+            AddRecipeView().tabItem {
+                Text("Add Recipe")
+            }
+            
             IngredientTypeView().tabItem {
                 Text("Ingredient Types")
             }
@@ -21,6 +25,10 @@ struct ContentView: View {
 
             IngredientListView().tabItem {
                 Text("Ingredients List")
+            }
+            
+            RecipeListView().tabItem {
+                Text("Recipe List")
             }
         }
     }
