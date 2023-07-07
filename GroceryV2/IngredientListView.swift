@@ -46,33 +46,35 @@ struct IngredientListView: View {
                         }
                     }
                 }
-                
-                //                Button("Add Ingredient") {
-                //                    let newIngredient = Ingredient(context: moc)
-                //                    newIngredient.name = name
-                //                    newIngredient.quantity = Float(quantity ?? 0)
-                //                    newIngredient.unit = unit
-                //                    newIngredient.category = category
-                //
-                //                }
-                
             } header: {
                 Text("Add Ingredient")
             }
             
             Section {
                 ForEach(ingredients, id: \.self) {ingredient in
-                    Text(ingredient.name ?? "Unknown Ingredient")
+                    HStack {
+                        Text("\(ingredient.name ?? "") - \(String(ingredient.quantity)) \(ingredient.unit ?? "")")
+                        Spacer()
+                        Text("\(ingredient.category ?? "")")
+                    }
                 }
             } header: {
                 Text("Ingredient List")
             }
             
-            Button("Test") {
+            Button("Test Add Ingredient") {
+                let newIngredient = Ingredient(context: moc)
+                
                 if let result = getType() {
-                    print(result.name ?? "")
-                    print(result.category ?? "")
+                    newIngredient.name = result.name
+                    newIngredient.category = result.category
+                } else {
+                    newIngredient.name = name
+                    newIngredient.category = "Others"
                 }
+                
+                newIngredient.quantity = quantity ?? 0
+                newIngredient.unit = unit
                 
             }
         }
@@ -85,9 +87,8 @@ struct IngredientListView: View {
             typeArray.append(ingredientTypes[i])
         }
         
-        let filtered = typeArray.filter({name.contains($0.name ?? "")})
-        
-//        print(filtered.count)
+        let filtered = typeArray.filter({($0.name ?? "").contains(name)})
+
         
         if filtered.count > 0 {
             return filtered[0]
